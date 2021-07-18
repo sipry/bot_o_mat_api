@@ -24,8 +24,9 @@ def robot(request, robot_pk=None):
             robot = Robot.objects.get(id=robot_pk)
         except Robot.DoesNotExist:
             return HttpResponse(status=404)
+
         data = JSONParser().parse(request)
-        serializer = RobotReadSerializer(robot, data=data)
+        serializer = RobotWriteSerializer(robot, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
